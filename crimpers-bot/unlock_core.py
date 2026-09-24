@@ -6,7 +6,7 @@ TOKEN     = os.environ["DISCORD_BOT_TOKEN"]
 GUILD_ID  = os.environ["GUILD_ID"]
 INTRO_ID  = os.environ["INTRO_CHANNEL_ID"]
 MEMBER_ID = os.environ["MEMBER_ROLE_ID"]
-MIN_CHARS = int(os.environ.get("MIN_INTRO_CHARS", "20"))
+MIN_CHARS = int(os.environ.get("MIN_INTRO_CHARS", "10"))
 
 HEADERS = {
     "Authorization": f"Bot {TOKEN}",

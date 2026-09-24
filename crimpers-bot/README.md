@@ -37,7 +37,7 @@ This unlocks the moment someone posts, and sweeps for anyone missed on startup.
 
 | Variable | Meaning |
 |---|---|
-| `MIN_INTRO_CHARS` | Minimum characters to count as a real intro (default 20, stops "hi" from unlocking) |
+| `MIN_INTRO_CHARS` | Minimum characters to count as a real intro (default 10, stops "hi" from unlocking) |
 
 ## Safety
 
