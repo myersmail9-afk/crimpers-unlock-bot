@@ -1,0 +1,27 @@
+name: Post message
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: "Channel name (without #)"
+        required: true
+      message:
+        required: true
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python crimpers-bot/tools/post_message.py
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          GUILD_ID:          ${{ vars.GUILD_ID }}
+          INTRO_CHANNEL_ID:  ${{ vars.INTRO_CHANNEL_ID }}
+          MEMBER_ROLE_ID:    ${{ vars.MEMBER_ROLE_ID }}
+          CHANNEL_NAME:      ${{ inputs.channel }}
+          MESSAGE:           ${{ inputs.message }}
