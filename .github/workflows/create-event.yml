@@ -1,0 +1,37 @@
+name: Create server event
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        required: true
+      description:
+        required: false
+      location:
+        required: true
+      start:
+        description: "Start, ISO 8601 UTC (e.g. 2026-09-27T00:15:00Z)"
+        required: true
+      end:
+        description: "End, ISO 8601 UTC"
+        required: true
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python crimpers-bot/tools/create_event.py
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          GUILD_ID:          ${{ vars.GUILD_ID }}
+          INTRO_CHANNEL_ID:  ${{ vars.INTRO_CHANNEL_ID }}
+          MEMBER_ROLE_ID:    ${{ vars.MEMBER_ROLE_ID }}
+          EVENT_NAME:        ${{ inputs.name }}
+          EVENT_DESCRIPTION: ${{ inputs.description }}
+          EVENT_LOCATION:    ${{ inputs.location }}
+          EVENT_START:       ${{ inputs.start }}
+          EVENT_END:         ${{ inputs.end }}
