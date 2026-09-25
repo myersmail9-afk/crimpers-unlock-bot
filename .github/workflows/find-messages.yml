@@ -1,0 +1,28 @@
+name: Find messages by author
+
+on:
+  workflow_dispatch:
+    inputs:
+      author:
+        description: "Username or display name (partial match)"
+        required: true
+      days:
+        description: "How many days back"
+        default: "14"
+
+jobs:
+  find:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python crimpers-bot/tools/find_messages.py
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          GUILD_ID:          ${{ vars.GUILD_ID }}
+          INTRO_CHANNEL_ID:  ${{ vars.INTRO_CHANNEL_ID }}
+          MEMBER_ROLE_ID:    ${{ vars.MEMBER_ROLE_ID }}
+          AUTHOR:            ${{ inputs.author }}
+          DAYS:              ${{ inputs.days }}
