@@ -130,6 +130,14 @@ function reply(i, content) {
 }
 
 async function verify(publicKey, sig, message) {
+  try {
+    return await verifyEd25519(publicKey, sig, message);
+  } catch {
+    return false;                                   // malformed signature or key
+  }
+}
+
+async function verifyEd25519(publicKey, sig, message) {
   const hex = (h) => new Uint8Array(h.match(/.{2}/g).map((b) => parseInt(b, 16)));
   const key = await crypto.subtle.importKey("raw", hex(publicKey), { name: "Ed25519" }, false, ["verify"]);
   return crypto.subtle.verify("Ed25519", key, hex(sig), new TextEncoder().encode(message));
