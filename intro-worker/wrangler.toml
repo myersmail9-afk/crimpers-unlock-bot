@@ -1,0 +1,12 @@
+name = "crimpers-intro"
+main = "src/index.js"
+compatibility_date = "2026-06-01"
+account_id = "c0d27dbd50509bb41ad35b8c022544d7"
+workers_dev = true
+
+[vars]
+APP_ID = "1547320234816311417"
+DISCORD_PUBLIC_KEY = "740553f2b79c57ae978f8b1fb0f1a544000379869c064c4bde564f877cfd581d"
+GUILD_ID = "1375228761863356556"
+INTRO_CHANNEL_ID = "1375239582391734272"
+# DISCORD_BOT_TOKEN is a Worker secret, pushed by .github/workflows/deploy-intro-worker.yml

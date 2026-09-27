@@ -1,0 +1,27 @@
+name: Deploy intro worker
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["intro-worker/**"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: intro-worker
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Deploy and pass the bot token to the Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          DISCORD_BOT_TOKEN:    ${{ secrets.DISCORD_BOT_TOKEN }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then echo "CLOUDFLARE_API_TOKEN secret not set yet - skipping."; exit 0; fi
+          npx --yes wrangler@4 deploy
+          echo "$DISCORD_BOT_TOKEN" | npx --yes wrangler@4 secret put DISCORD_BOT_TOKEN
